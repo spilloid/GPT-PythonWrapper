@@ -2,14 +2,21 @@ name: Continuous Integration testing with pytest
 on:
   push:
 jobs:
-  build-and-test:
+  linting:
     runs-on: self-hosted
     steps:
   # Get src code
     - name: Check out repository
       uses: actions/checkout@v4
+    - name: Pylint
+      uses: microsoft/action-python@0.7.0
+      with:
+        pylint: true
+  testing:
+    runs-on: self-hosted
+    steps:
     # Run Test
     - name: Pytest
       uses: microsoft/action-python@0.7.0
       with:          
-        testing: true
+        pytest: true
