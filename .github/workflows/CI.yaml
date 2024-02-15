@@ -11,6 +11,8 @@ jobs:
   # Setup python
     - name: Setup Python
       uses: actions/setup-python@v5.0.0
+      with:
+         python-version: 3.12.2
   # Creates and activates a virtual environment
     - name: Create and activate virtual environment
       run: |
