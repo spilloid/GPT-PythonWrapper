@@ -5,7 +5,19 @@ jobs:
   build-and-test:
     runs-on: self-hosted
     steps:
+  # Get src code
     - name: Check out repository
       uses: actions/checkout@v4
+  # Creates and activates a virtual environment
+    - name: Create and activate virtual environment
+      run: |
+        python -m venv venv
+        source venv/bin/activate
+    # Installs dependencies
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+    # Run Test
     - name: Run pytest
       uses: pavelzw/pytest-action@v2.1.0
