@@ -1,15 +1,15 @@
 import pytest
-from app import app as flask_app  # Import your Flask app
+from app import app as flaskapp  # Import your Flask app
 import os
 
 @pytest.fixture
 def app():
     """Create and configure a new app instance for each test."""
     # Setup: create a temporary database, configure the app for testing, etc.
-    flask_app.config.update({
+    flaskapp.config.update({
         "TESTING": True,
     })
-    yield flask_app
+    yield flaskapp
 
 @pytest.fixture
 def client(app):
