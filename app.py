@@ -1,7 +1,9 @@
 # app.py
 from chat_components import ChatComponent, Message, ChatComposite, ChatVisitor
 from flask import Flask, render_template, request, jsonify
-import openai
+from openai import OpenAI
+
+client = OpenAI(api_key=os.environ.get("OPENAI_API_KEY"))
 from dotenv import load_dotenv
 import os
 
@@ -9,7 +11,6 @@ load_dotenv()  # take environment variables from .env.
 
 # Initialize
 app = Flask(__name__)
-openai.api_key = os.environ.get("OPENAI_API_KEY")
 root = ChatComposite()
 
 @app.route('/')
@@ -24,11 +25,9 @@ def send_message():
     # GPT-3.5 Interaction
     messages = [{"role": "system", "content": "You are an intelligent assistant."}]
     messages.append({"role": "user", "content": user_message})
-    chat = openai.ChatCompletion.create(
-        model="gpt-3.5-turbo",
-        messages=messages
-    )
-    assistant_reply = chat.choices[0].message['content']
+    chat = client.chat.completions.create(model="gpt-3.5-turbo",
+    messages=messages)
+    assistant_reply = chat.choices[0].message.content
 
     root.add(Message('Assistant', assistant_reply))
 

@@ -1,0 +1,27 @@
+# Use Python Alpine image for a minimal footprint
+FROM python:3.9-alpine
+
+# Set the working directory in the container
+WORKDIR /app
+
+# Copy the requirements file into the container
+COPY requirements.txt .
+
+# Install virtualenv
+RUN python -m pip install --upgrade pip && \
+    python -m pip install virtualenv
+
+# Create a virtual environment named dev
+RUN python -m virtualenv dev
+
+# Activate the virtual environment and install dependencies from requirements.txt
+RUN source dev/bin/activate && \
+    pip install -r requirements.txt
+
+# Copy the rest of your application's source code from your host to your image filesystem.
+COPY . .
+
+# Assuming your tests are defined in a standard way, replace `your_test_script.py` with your actual test script or command.
+# For example, using pytest you might have: pytest or python -m unittest discover for unittest
+CMD source dev/bin/activate && \
+    python -m pytest

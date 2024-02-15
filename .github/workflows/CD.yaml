@@ -1,0 +1,21 @@
+name: Continuous Deployment with Docker Test
+
+on:
+  push:
+
+jobs:
+  build-and-test:
+    runs-on: self-hosted
+    steps:
+    - name: Check out repository
+      uses: actions/checkout@v2
+
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v1
+
+    - name: Build Docker Image
+      run: docker build -t gptpythonwrapper -f Dockerfile_test .
+
+    - name: Run Docker Container and Output Test Results
+      run: |
+        docker run --name gptpythonwrapper gptpythonwrapper 
