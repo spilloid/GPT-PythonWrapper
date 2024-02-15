@@ -18,4 +18,4 @@ jobs:
 
     - name: Run Docker Container and Output Test Results
       run: |
-        docker run --name gptpythonwrapper gptpythonwrapper 
+        docker run gptpythonwrapper 
